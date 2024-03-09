@@ -8,7 +8,7 @@ I created this app to assist my family in our business by tracking and monitorin
 
 ## Installation
 
-##### Backend Directory:
+#### Backend Directory:
 
 1. **Create Virtual Environment:**
 
@@ -57,7 +57,7 @@ I created this app to assist my family in our business by tracking and monitorin
    python manage.py runserver
    ```
 
-##### Frontend Directory:
+#### Frontend Directory:
 
 1. **Install Dependencies:**
 

@@ -3,5 +3,4 @@ djangorestframework
 django-money
 django-cors-headers
 djangorestframework-simplejwt
-python-dotenv
 django-environ

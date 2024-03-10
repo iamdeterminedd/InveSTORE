@@ -38,7 +38,13 @@ I created this app to assist my family in our business by tracking and monitorin
 
 6. **Environment Variables:**
 
-   - Insert a `.env` file with all the secret keys needed.
+   - Insert a `.env` file with all the secret keys needed:
+
+   ```
+   SECRET_KEY=your_own_secret_key
+   DEBUG=your_own
+   ORIGINS=http://your_own_origins
+   ```
 
 7. **Run Migrations:**
 

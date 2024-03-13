@@ -23,6 +23,17 @@ class ProductList(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    
+    def list(self, request):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        total_count = queryset.count()
+        response_data = {
+            'total_items' : total_count,
+            'products' : serializer.data,
+
+        }
+        return Response(response_data)
 
 class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]

@@ -1,4 +1,16 @@
-import { Box, Button, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  HStack,
+  Spacer,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
@@ -30,13 +42,17 @@ const columns = [
 const Inventory = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { logoutUser } = useContext(AuthContext);
-  const [data, setData] = useState([]);
+  const [item, setItem] = useState([]);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get('inventory/');
-        setData(response.data);
+        setItem(response.data.products);
+        setTotal(response.data.total_items);
+
+        console.log(response.data.products);
       } catch (error) {
         if (axios.isCancel(error)) {
           console.log('Request cancelled!');
@@ -65,7 +81,7 @@ const Inventory = () => {
       enqueueSnackbar('Item Deleted!', {
         variant: 'success',
       });
-      setData(data.filter((item) => item.id !== id));
+      setItem(item.filter((item) => item.id !== id));
     } catch (error) {
       enqueueSnackbar('Delete: Something went wrong!', {
         variant: 'error',
@@ -73,20 +89,25 @@ const Inventory = () => {
       console.error('Deletion failed:', error);
     }
   };
+
   return (
     <Box p="20px">
-      <NavLink to="/add/item">
-        <Button
-          leftIcon={<FaEdit />}
-          color="white"
-          size="md"
-          bg="green.500"
-          colorScheme="green"
-          mb="10px"
-        >
-          NEW
-        </Button>
-      </NavLink>
+      <HStack>
+        <NavLink to="/add/item">
+          <Button
+            leftIcon={<FaEdit />}
+            color="white"
+            size="md"
+            bg="green.500"
+            colorScheme="green"
+            mb="10px"
+          >
+            NEW
+          </Button>
+        </NavLink>
+        <Spacer />
+        <Text>Total Items: {total}</Text>
+      </HStack>
       <Box bg="white">
         <Table variant="simple" color="gray">
           <Thead>
@@ -100,7 +121,7 @@ const Inventory = () => {
             </Tr>
           </Thead>
           <Tbody color="gray.700">
-            {data.map((row) => (
+            {item?.map((row) => (
               <Tr key={row.id}>
                 {columns.map((column) => (
                   <Td key={column.accessor}>

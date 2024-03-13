@@ -5,3 +5,6 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ('id', 'product_name', 'price', 'quantity', 'description')
+
+def get_total_item():
+    return Product.count()
